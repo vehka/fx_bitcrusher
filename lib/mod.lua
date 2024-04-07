@@ -13,7 +13,7 @@ function FxBitcrusher:add_params()
     FxBitcrusher:add_control("fx_bitcrusher_samplerate", "samplerate", "samplerate", controlspec.new(1000, 48000, 'lin', 1000, 48000))
     FxBitcrusher:add_control("fx_bitcrusher_tone", "tone", "tone", controlspec.new(0, 1, 'lin', 0, 0.1))
     FxBitcrusher:add_control("fx_bitcrusher_gate", "gate", "gate", controlspec.new(0, 1, 'lin', 0, 0.5))
-    FxBitcrusher:add_control("fx_bitcrusher_gain", "tone", "tone", controlspec.new(0, 1, 'lin', 0, 0.1))
+    FxBitcrusher:add_control("fx_bitcrusher_gain", "gain", "gain", controlspec.new(0, 1, 'lin', 0, 0.1))
 end
 
 mod.hook.register("script_pre_init", "bitcrusher mod pre init", function()
