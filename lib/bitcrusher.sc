@@ -25,21 +25,21 @@ FxBitcrusher : FxBase {
 
     addSynthdefs {
         SynthDef(\fxBitcrusher, {|inBus, outBus, bitrate=12, samplerate=48000, tone=0.5, gate=0.5, gain=1.0|
-            var wet = In.ar(inBus, 2);
+            var bc_wet = In.ar(inBus, 2);
             var freq, filterType;
             
             // First we feed into a HPF to filter out sub-20Hz
-            wet = HPF.ar(wet, 25);
+            bc_wet = HPF.ar(bc_wet, 25);
             // Then into a noise gate
             gate = Select.kr(gate > 0.5, [
               LinExp.kr(gate, 0, 0.5, 0.001, 0.015),
               LinExp.kr(gate, 0.5, 1, 0.015, 0.05),
             ]);
-            wet = Compander.ar(wet, wet, gate, 6, 1, 0.1, 0.01);
+            bc_wet = Compander.ar(bc_wet, bc_wet, gate, 6, 1, 0.1, 0.01);
             // Then we LPF to prevent aliasing before bit-reducing
-            wet = LPF.ar(wet, 5.66.reciprocal * samplerate);
+            bc_wet = LPF.ar(bc_wet, 5.66.reciprocal * samplerate);
             // Then into a bit reducer
-            wet = Decimator.ar(wet, samplerate, bitrate);
+            bc_wet = Decimator.ar(bc_wet, samplerate, bitrate);
 
             // Then we feed into the Tone section
             // Tone controls a MMF, exponentially ranging from 10 Hz - 21 kHz
@@ -52,8 +52,8 @@ FxBitcrusher : FxBase {
               LinExp.kr(tone, 0.75, 1, 20, 21000),
             ]);
             filterType = Select.kr(tone > 0.75, [0, 1]);
-            wet = DFM1.ar(
-              wet,
+            bc_wet = DFM1.ar(
+              bc_wet,
               freq,
               \res.kr(0.1),
               gain,
@@ -62,7 +62,7 @@ FxBitcrusher : FxBase {
             ).softclip;
 
             // Output to the bus
-            Out.ar(outBus, wet);
+            Out.ar(outBus, bc_wet);
         }).add;
     }
 
