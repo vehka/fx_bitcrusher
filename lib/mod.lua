@@ -7,7 +7,7 @@ local FxBitcrusher = fx:new{
 
 
 function FxBitcrusher:add_params()
-    params:add_separator("fx_bitcrusher", "fx bitcrusher")
+    params:add_group("fx_bitcrusher", "FX Bitcrusher", 7)
     FxBitcrusher:add_slot("fx_bitcrusher_slot", "slot")
     FxBitcrusher:add_control("fx_bitcrusher_bitrate", "bitrate", "bitrate", controlspec.new(2, 32, 'lin', 0, 12))
     FxBitcrusher:add_control("fx_bitcrusher_samplerate", "samplerate", "samplerate", controlspec.new(1000, 48000, 'lin', 1000, 48000))
